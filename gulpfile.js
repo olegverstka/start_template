@@ -11,7 +11,8 @@ var gulp        = require('gulp'),
     ftp         = require('gulp-ftp'),
     spritesmith = require('gulp.spritesmith'),
     imagemin    = require('gulp-imagemin'),
-    pngquant    = require('imagemin-pngquant');
+    pngquant    = require('imagemin-pngquant'),
+    runSequence = require('run-sequence');
 
 handleError = function(err) {
     gutil.log(err);
@@ -50,24 +51,67 @@ gulp.task('clean', function() {
         .pipe(clean());
 });
 
+// // build css
+// gulp.task('css:build', function() {
+//     var assets = useref.assets();
+
+//     return gulp.src('app/*.html')
+//         .pipe(assets)
+//         .pipe(gulpif('*.css', minifyCss()))
+//         .pipe(assets.restore())
+//         .pipe(useref())
+//         .pipe(gulp.dest('dist'))
+// });
+
+// // build js
+// gulp.task('js:build', function() {
+//     var assets = useref.assets();
+
+//     return gulp.src('app/*.html')
+//         .pipe(assets)
+//         .pipe(gulpif('*.js', uglify()))
+//         .pipe(assets.restore())
+//         .pipe(useref())
+//         .pipe(gulp.dest('dist'))
+// });
+
+// Optimizing CSS and JavaScript 
+gulp.task('useref', function() {
+  var assets = useref.assets();
+
+  return gulp.src('app/*.html')
+    .pipe(assets)
+    // Minifies only if it's a CSS file
+    .pipe(gulpif('*.css', minifyCss()))
+    // Uglifies only if it's a Javascript file
+    .pipe(gulpif('*.js', uglify()))
+    .pipe(assets.restore())
+    .pipe(useref())
+    .pipe(gulp.dest('dist'))
+});
+
 // Переместим шрифты из папки src
 gulp.task('fonts:build', function() {
     gulp.src('app/fonts/**/*.*')
         .pipe(gulp.dest('dist/fonts/'))
 });
 
-// Bild
-gulp.task('build', ['clean', 'imgmin:build', 'fonts:build'], function() {
-    var assets = useref.assets();
-
-    return gulp.src('app/*.html')
-        .pipe(assets)
-        .pipe(gulpif('app/*.js', uglify()))
-        .pipe(gulpif('app/*.css', minifyCss()))
-        .pipe(assets.restore())
-        .pipe(useref())
-        .pipe(gulp.dest('dist'));
+// Build
+gulp.task('build', function (callback) {
+  runSequence('clean', 'useref', ['imgmin:build', 'fonts:build'], callback);
 });
+
+// gulp.task('build', ['clean', 'imgmin:build', 'fonts:build'], function() {
+//     var assets = useref.assets();
+
+//     return gulp.src('app/*.html')
+//         .pipe(assets)
+//         .pipe(useref())
+//         .pipe(gulpif('app/*.js', uglify()))
+//         .pipe(gulpif('app/*.css', minifyCss()))
+//         .pipe(assets.restore())
+//         .pipe(gulp.dest('dist'));
+// });
 
 // Static Server + watching scss/html files
 gulp.task('serve', ['compass'], function() {
