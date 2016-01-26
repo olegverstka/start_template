@@ -12,6 +12,7 @@ var gulp        = require('gulp'),
     spritesmith = require('gulp.spritesmith'),
     imagemin    = require('gulp-imagemin'),
     pngquant    = require('imagemin-pngquant'),
+    wiredep     = require('wiredep').stream,
     runSequence = require('run-sequence');
 
 handleError = function(err) {
@@ -32,6 +33,13 @@ gulp.task('ftp', function () {
         // this can be a gulp plugin, gulp.dest, or any kind of stream 
         // here we use a passthrough stream 
         .pipe(gutil.noop());
+});
+
+// Подключаем ссылки на bower components
+gulp.task('wiredep', function () {
+    gulp.src('app/*.html')
+        .pipe(wiredep())
+        .pipe(gulp.dest('app/'))
 });
 
 // Минификация изображений

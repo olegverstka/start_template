@@ -3,3 +3,16 @@
 @import "_fonts.scss";
 
 // Template style
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 154px;
+}

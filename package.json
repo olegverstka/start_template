@@ -16,6 +16,7 @@
     "gulp-util": "^3.0.7",
     "gulp.spritesmith": "^4.2.4",
     "imagemin-pngquant": "^4.2.0",
-    "run-sequence": "^1.1.5"
+    "run-sequence": "^1.1.5",
+    "wiredep": "^3.0.0"
   }
 }
