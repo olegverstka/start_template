@@ -1,0 +1,55 @@
+// Миксин для создания треугольников на css3
+@mixin triangle($width, $height, $bg, $direction) {
+	width: 0;
+	height: 0;
+	border-style: solid;
+	@if $direction == t {
+		border-width: 0 $width / 2 + px $height + px $width / 2 + px;
+		border-color: transparent transparent $bg transparent;
+	}
+	@if $direction == r {
+		border-width: $height / 2 + px 0 $height / 2 + px $width + px;
+		border-color: transparent transparent transparent $bg;
+	}
+	@if $direction == b {
+		border-width: $height + px $width / 2 + px 0 $width / 2 + px;
+		border-color: $bg transparent transparent transparent;
+	}
+	@if $direction == l {
+		border-width: $height / 2 + px $width + px $height / 2 + px 0;
+		border-color: transparent $bg transparent transparent;
+	}
+	@if $direction == tl {
+		border-width: $height + px $width + px 0 0;
+		border-color: $bg transparent transparent transparent;
+	}
+	@if $direction == tr {
+		border-width: 0 $width + px $height + px 0;
+		border-color: transparent $bg transparent transparent;
+	}
+	@if $direction == br {
+		border-width: 0 0 $height + px $width + px;
+		border-color: transparent transparent $bg transparent;
+	}
+	@if $direction == bl {
+		border-width: $height + px 0 0 $width + px;
+		border-color: transparent transparent transparent $bg;
+	}
+	// Использование
+	// @include triangle(20, 20, #ccc, tl)
+	// t - top
+	// b - bottom
+	// r - right
+	// l - left
+	// tl - top left
+	// tr - top right
+	// br - bottom rigth
+	// bl - bottom left
+}
+// Центрирование блока по горизонтали и по вертикали
+@mixin vcenter($top_m: 0, $right_m: 0, $bottom_m: 0, $left_m: 0) {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: $top_m + px $right_m + px $bottom_m + px $left_m + px;
+}
