@@ -21,10 +21,7 @@
     "jquery": "1.11.2",
     "bourbon": "~4.2.6",
     "fancybox": "~2.1.5",
-    "bxslider-4": "bx-slider.js#~4.2.5",
-    "Selecter": "~3.2.4",
     "animate.css": "~3.5.0",
-    "jquery-ui": "~1.11.4",
     "jquery-form-styler": "jquery.form-styler#~1.7.4",
     "Headhesive.js": "headhesive.js#~1.2.4",
     "jquery.inputmask": "~3.2.7"
@@ -52,11 +49,8 @@
     "jquery": "1.11.2",
     "bourbon": "~4.2.6",
     "fancybox": "~2.1.5",
-    "bxslider-4": "bx-slider.js#~4.2.5",
-    "Selecter": "~3.2.4",
     "animate.css": "~3.5.0",
     "jquery-form-styler": "jquery.form-styler#~1.7.4",
-    "jquery-ui": "^1.11.4",
     "Headhesive.js": "headhesive.js#~1.2.4",
     "jquery.inputmask": "~3.2.7"
   }
