@@ -88,15 +88,17 @@ gulp.task('build', function (callback) {
 });
 
 // Static Server + watching scss/html files
-gulp.task('serve', ['compass'], function() {
+gulp.task('serve', function(done) {
 
     browserSync.init({
         server: "./app"
     });
 
-    gulp.watch("app/scss/**/*.scss", ['compass']);
+    gulp.watch("app/scss/**/*.scss", gulp.series('compass'));
     gulp.watch("app/js/**/*.js").on('change', browserSync.reload);
     gulp.watch("app/*.html").on('change', browserSync.reload);
+
+    done();
 });
 
 // Минификация css
@@ -126,7 +128,7 @@ gulp.task('sprite', function () {
 });
 
 // Compile sass, compass
-gulp.task('compass', function() {
+gulp.task('compass', function(done) {
   gulp.src('app/scss/**/*.scss')
     .pipe(compass({
       css: 'app/css',
@@ -141,6 +143,14 @@ gulp.task('compass', function() {
     .pipe(minifyCss())
     .pipe(gulp.dest('app/css'))
     .pipe(browserSync.stream());
+
+    done();
 });
 
-gulp.task('default', ['serve']);
+gulp.task('default', gulp.series('serve'));
+
+// gulp.task('default', function(cb) {
+//   gulp.parallel(
+//     'serve'
+//   )(cb)
+// });
